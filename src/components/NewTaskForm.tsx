@@ -13,7 +13,7 @@ export const NewTaskForm: FunctionComponent<Props> = ({
     task
 }) => (
     <form onSubmit={onAdd}>
-        <input onChange={onChange} value={task.name} />
-        <button type="submit">Add a Task</button>
+        <input type="text" className="form-control" onChange={onChange} value={task.name} />
+        <button className="btn btn-primary" type="submit">Add a Task</button>
     </form>
 );

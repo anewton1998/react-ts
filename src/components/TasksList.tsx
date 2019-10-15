@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const TasksList: FunctionComponent<Props> = ({ tasks, onDelete}) => (
-    <ul>
+    <ul className="list-group">
         {tasks.map(task => (
             <TasksListItem key={task.id} task={task} onDelete={onDelete} />
         ))}
