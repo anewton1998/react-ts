@@ -11,7 +11,7 @@ interface Props {
 export const TasksList: FunctionComponent<Props> = ({ tasks, onDelete}) => (
     <ul>
         {tasks.map(task => (
-            <TasksListItem task={task} onDelete={onDelete} />
+            <TasksListItem key={task.id} task={task} onDelete={onDelete} />
         ))}
     </ul>
 );
