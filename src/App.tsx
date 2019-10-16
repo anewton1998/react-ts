@@ -1,67 +1,61 @@
-import React, { Component } from 'react';
-import { Task } from './models/task';
-import { NewTaskForm } from './components/NewTaskForm';
-import { TasksList } from './components/TasksList';
+import React, { Component, FunctionComponent, ReactNode } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from 'react-router-dom';
+import Todo from './pages/Todo';
 
-interface State {
-  newTask: Task;
-  tasks: Task[];
+interface PrivateRouteParams {
+  children: ReactNode,
+  rest: { [x: string]: any }
 }
 
-class App extends Component<{}, State> {
-  state = {
-    newTask: {
-      id: 1,
-      name: ""
-    },
-    tasks: []
-  };
+class App extends Component<{}> {
 
   render() {
     return (
-      <div className="jumbotron d-flex align-items-center min-vh-100">
-      <div className="container">
-        <h2>Hello React TS</h2>
-        <NewTaskForm
-          task={this.state.newTask}
-          onAdd={this.addTask}
-          onChange={this.handleTaskChange}
-          />
-          <TasksList tasks={this.state.tasks} onDelete={this.deleteTask} />
-      </div>
-      </div>
+      <Router>
+        <div>
+          <AuthButton/>
+
+          <ul>
+            <li>
+              <Link to="/public">Public Page</Link>
+            </li>
+            <li>
+              <Link to="/protected">Protected Page</Link>
+            </li>
+          </ul>
+
+          <Switch>
+            <Route path="/public">
+              <PublicPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/protected">
+              <Todo />
+            </PrivateRoute>
+          </Switch>
+
+        </div>
+      </Router>
     );
   }
 
-  private addTask = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    this.setState(previousState => ({
-      newTask: {
-        id: previousState.newTask.id + 1,
-        name: ""
-      },
-      tasks: [...previousState.tasks, previousState.newTask]
-    }));
-  };
-
-  private handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      newTask: {
-        ...this.state.newTask,
-        name: event.target.value
-      }
-    });
-  };
-
-  private deleteTask = (taskToDelete: Task) => {
-    this.setState(previousState => ({
-      tasks: [
-        ...previousState.tasks.filter(task => task.id !== taskToDelete.id)
-      ]
-    }));
-  };
 
 }
+
+export const PrivateRoute: FunctionComponent<PrivateRouteParams> = (params) =>
+      <Route {...params.rest} render={({ location }) => 
+        fakeAuth.isAuthenticated ? ( params.children ) : ( <Redirect to={{ pathname: "/login", state: { from: location } }}/>)
+        } />
+
 
 export default App;
