@@ -19,7 +19,8 @@ class App extends Component<{}, State> {
 
   render() {
     return (
-      <div>
+      <div className="jumbotron d-flex align-items-center min-vh-100">
+      <div className="container">
         <h2>Hello React TS</h2>
         <NewTaskForm
           task={this.state.newTask}
@@ -27,6 +28,7 @@ class App extends Component<{}, State> {
           onChange={this.handleTaskChange}
           />
           <TasksList tasks={this.state.tasks} onDelete={this.deleteTask} />
+      </div>
       </div>
     );
   }
