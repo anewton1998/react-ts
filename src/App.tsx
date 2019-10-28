@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent, ReactNode } from 'react';
+import React, { Component, FunctionComponent } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +8,7 @@ import {
   useHistory,
   useLocation
 } from 'react-router-dom';
-import Todo from './pages/Todo';
+import Todo from './pages/TodoPage';
 
 interface PrivateRouteProps {
   path: string
@@ -45,7 +45,7 @@ class App extends Component<{}> {
 
         </div>
       </Router>
-    );
+    )
   }
 
 }
@@ -53,12 +53,12 @@ class App extends Component<{}> {
 const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb : () => void ) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb,100);
+    fakeAuth.isAuthenticated = true
+    setTimeout(cb,100)
   },
   signout(cb : () => void ) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb,100);
+    fakeAuth.isAuthenticated = false
+    setTimeout(cb,100)
   }
 }
 
@@ -67,7 +67,7 @@ export const PrivateRoute: FunctionComponent<PrivateRouteProps> = (props) =>
         fakeAuth.isAuthenticated ? ( props.children ) : ( <Redirect to={{ pathname: "/login", state: { from: location } }}/>)
         } />
 
-export const AuthButton = ({}) => {
+export const AuthButton = () => {
   let history = useHistory();
 
   return fakeAuth.isAuthenticated ? (
@@ -87,27 +87,27 @@ export const AuthButton = ({}) => {
 }
 
 
-export const PublicPage = ({}) => {
-  return <h3>Public</h3>;
+export const PublicPage = () => {
+  return <h3>Public</h3>
 }
 
-export const LoginPage = ({}) => {
+export const LoginPage = () => {
   let history = useHistory();
   let location = useLocation();
 
-  let {from} = location.state || { from: { pathname: "/" } };
+  let {from} = location.state || { from: { pathname: "/" } }
   let login = () => {
     fakeAuth.authenticate( () => {
-      history.replace(from);
-    });
-  };
+      history.replace(from)
+    })
+  }
 
   return (
     <div>
       <p>you must be logged in to view the page {from.pathname}</p>
       <button onClick={login}>Log in</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

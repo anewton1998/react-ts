@@ -4,8 +4,8 @@ import { NewTaskForm } from '../components/NewTaskForm';
 import { TasksList } from '../components/TasksList';
 
 interface State {
-  newTask: Task;
-  tasks: Task[];
+  newTask: Task
+  tasks: Task[]
 }
 
 class Todo extends Component<{}, State> {
@@ -15,7 +15,7 @@ class Todo extends Component<{}, State> {
       name: ""
     },
     tasks: []
-  };
+  }
 
   render() {
     return (
@@ -30,7 +30,7 @@ class Todo extends Component<{}, State> {
           <TasksList tasks={this.state.tasks} onDelete={this.deleteTask} />
       </div>
       </div>
-    );
+    )
   }
 
   private addTask = (event: React.FormEvent<HTMLFormElement>) => {
@@ -42,8 +42,8 @@ class Todo extends Component<{}, State> {
         name: ""
       },
       tasks: [...previousState.tasks, previousState.newTask]
-    }));
-  };
+    }))
+  }
 
   private handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
@@ -51,17 +51,17 @@ class Todo extends Component<{}, State> {
         ...this.state.newTask,
         name: event.target.value
       }
-    });
-  };
+    })
+  }
 
   private deleteTask = (taskToDelete: Task) => {
     this.setState(previousState => ({
       tasks: [
         ...previousState.tasks.filter(task => task.id !== taskToDelete.id)
       ]
-    }));
-  };
+    }))
+  }
 
 }
 
-export default Todo;
+export default Todo
